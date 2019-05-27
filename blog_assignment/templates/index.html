@@ -10,19 +10,12 @@
     <header>
         <h1>Django Blog</h1>
     </header>
-    <article class="post">
-        <p>Posted: {{ todays_date }}</p>
-        <h3>What is a client?</h3>
-            <p>A client is a device or web browser that sends requests to servers to access its information.</p>
-        <h3>What is a server?</h3>
-            <p>A server is a device or a program that sends responds to requests made by other programs or devices called clients.</p>
-        <h3>What is an HTTP request?</h3>
-            <p>An HTTP request is a protocol made from the client requesting data from the server using a URL. Common HTTP request methods are GET, POST, PUT or PATCH and DELETE. </p>
-        <h3>What is an HTTP response?</h3>
-            <p>An HTTP response is the message that the server sends back to the client after making a request. An HTTP response contains a status code, headers and a body.</p>
-        <h3>What is Django and why do we use it?</h3>
-            <p>Django is a 'web framework for perfectionist with deadlines.' It's a set of librares that provides us with code that helps with common tasks required to build a web app.</p>
-
+    <article>
+      {% for article in articles %}
+        <h1>{{ article.title }}</h1>
+        <p>{{ article.body }}</p>
+        <p>Published by {{ article.author }} on {{ article.published_date }}</p>
+      {% endfor %}
     </article>
 
 </body>
