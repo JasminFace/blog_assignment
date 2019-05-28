@@ -1,5 +1,3 @@
-from django.http import HttpResponse
-from django.shortcuts import render
 from django.db import models
 
 class Article(models.Model):
@@ -10,9 +8,11 @@ class Article(models.Model):
     author = models.CharField(max_length=225)
 
     def __str__(self):
-        return f"{self.title}"
+        return f'{self.title}'
 
-    # def blog_posts(self):
-    #     context = {'post': Article.objects.all()}
-    #     response = render(request, 'index.html', context)
-    #     return HttpResponse(response)
+class Topic(models.Model):
+    category = models.CharField(max_length=255)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='topic')
+
+    def __str__(self):
+        return f'{self.category}'

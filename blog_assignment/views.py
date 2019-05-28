@@ -1,7 +1,7 @@
 from datetime import date
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from blog_assignment.models import Article
+from blog_assignment.models import Article, Topic
 
 def root(request):
     return HttpResponseRedirect('/home')
@@ -14,4 +14,13 @@ def home_page(request):
         }
 
     response = render(request, 'index.html', context)
+    return HttpResponse(response)
+
+def post_details(request, id):
+    article = Article.objects.get(pk=id)
+    context = {
+        'title': article.title,
+        'article': article
+        }
+    response = render(request, 'article_details.html', context)
     return HttpResponse(response)
