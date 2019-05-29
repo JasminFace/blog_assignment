@@ -1,8 +1,44 @@
 {% extends 'base.html' %}
 {% block content %}
-    <article>
-        <h1>{{ article.title }}</h1>
-        <p>{{ article.body }}</p>
-        <p>Published by {{ article.author }} on {{ article.published_date }}</p>
-    </article>
+    <h1>{{ article.title }}</h1>
+    <p>{{ article.body }}</p>
+    <p>Published by {{ article.author }} on {{ article.published_date }}</p>
+
+    <form class = "add_comment" action="{% url 'create_comment' %}" method="post">
+        {% csrf_token %}
+
+        <input type="hidden" name="article" value="{{ article.pk }}">
+
+        <div class="field">
+            <label for="name">
+                <span>Name:</span>
+                <input id="name" type="text" name="name">
+            </label>
+        </div>
+
+        <div class="field">
+            <label for="comment">Comment: </label>
+            <textarea name="comment" id="comment" cols="42" rows="12" style="resize:none"></textarea>
+        </div>
+        
+        <input type="hidden" name="date" value="{{ comment.created_at }}">
+
+        <div class="submit_comment">
+            <label for="submit">Submit</label>
+            <input id="submit" type="submit" value="Submit"/>
+        </div> 
+    </form>
+
+    {% for comment in article.comments.all %}
+        <ul class="comments">
+            <li>
+                <p class="comment">{{ comment.message }}</p>
+                <p class="comment_info">{{ comment.name }} - {{ comment.created_at }}</p>
+            </li>
+        </ul>
+    {% empty %}
+        <p>No comments here yet :(</p>
+    {% endfor %}
+
+
 {% endblock %}
